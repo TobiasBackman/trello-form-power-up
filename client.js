@@ -2,10 +2,35 @@
 function onCreateQuestion(t) {
   return t.popup({
     title: 'Add Custom Question',
-    url: './add-question-popup', // We can render a popup without a separate HTML file
-    height: 250
+    items: function () {
+      return [
+        {
+          text: 'Enter question label',
+          callback: function (t) {
+            return t.text('Enter Question Label').then((label) => {
+              return t.set('card', 'shared', 'questionLabel', label);
+            });
+          }
+        },
+        {
+          text: 'Choose question type',
+          callback: function (t) {
+            return t.popup({
+              title: 'Question Type',
+              items: function () {
+                return [
+                  { text: 'Text', callback: () => t.set('card', 'shared', 'questionType', 'text') },
+                  { text: 'Number', callback: () => t.set('card', 'shared', 'questionType', 'number') }
+                ];
+              }
+            });
+          }
+        }
+      ];
+    }
   });
 }
+
 
 // Popup content for adding a new question, defined inline
 function addQuestionPopup(t) {
