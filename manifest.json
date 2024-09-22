@@ -1,10 +1,18 @@
 {
   "name": "Trello Form Power-Up",
-  "capabilities": ["card-buttons"],
-  "connectors": {
-    "card-buttons": "https://tobiasbackman.github.io/trello-form-power-up/client.js"
-  },
+  "details":"A simple Power-Up on Heroku",
   "icon": {
-    "url": "https://tobiasbackman.github.io/trello-form-power-up/icon.ico"
+    "url": "https://github.com/trello/power-up-on-heroku/blob/master/public/trello.png?raw=true"
+  },
+  "author": "Mappi Softwares",
+  "capabilities": [
+    "board-buttons",
+    "card-back-section",
+    "card-buttons"
+  ],
+  "connectors": {
+    "iframe": {
+      "url": "./index.html"
+    }
   }
 }
