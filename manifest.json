@@ -2,7 +2,7 @@
   "name": "Trello Form Power-Up",
   "details":"A simple Power-Up on Heroku",
   "icon": {
-    "url": "https://github.com/trello/power-up-on-heroku/blob/master/public/trello.png?raw=true"
+    "url": "https://raw.githubusercontent.com/TobiasBackman/trello-form-power-up/refs/heads/master/icon.ico"
   },
   "author": "Mappi Softwares",
   "capabilities": [
