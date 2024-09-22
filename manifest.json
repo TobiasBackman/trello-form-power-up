@@ -1,12 +1,6 @@
 {
-  "name": "Trello Form Power Up",
-  "capabilities": [
-    "card-buttons",
-    "card-back-section"
-  ],
-  "description": "Add forms to Trello cards to capture structured information.",
-  "author": "Mappi Softwares",
-  "version": "1.0",
+  "name": "Custom Form Power-Up",
+  "capabilities": ["card-buttons"],
   "start_url": "https://tobiasbackman.github.io/trello-form-power-up/form.html",
-  "homepage": "https://github.com/TobiasBackman/trello-form-power-up"
+  "description": "Simple form power-up."
 }
