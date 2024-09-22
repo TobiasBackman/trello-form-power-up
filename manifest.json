@@ -1,19 +1,29 @@
 {
   "name": "Trello Form Power-Up",
-  "details":"A simple Power-Up on Heroku",
+  "details": "A form Power-Up",
   "icon": {
     "url": "https://raw.githubusercontent.com/TobiasBackman/trello-form-power-up/refs/heads/master/icon.ico"
   },
   "author": "Mappi Softwares",
-  "capabilities": [
-    "board-buttons",
-    "card-back-section",
-    "card-buttons",
-    "card-detail-badges"
-  ],
-  "connectors": {
-    "iframe": {
-      "url": "./index.html"
-    }
+  "capabilities": {
+    "board-buttons": [],
+    "card-buttons": [
+      {
+        "text": "Create Form",
+        "callback": "onCreateForm"
+      },
+      {
+        "text": "View Form",
+        "callback": "onViewForm"
+      }
+    ],
+    "card-back-section": {
+      "title": "Custom Forms",
+      "callback": "onShowCardBack"
+    },
+    "card-detail-badges": []
+  },
+  "iframe": {
+    "url": "./index.html"
   }
 }
