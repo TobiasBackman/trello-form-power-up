@@ -19,41 +19,22 @@
 
   <script src="https://p.trellocdn.com/power-up.min.js"></script>
   <script>
-    // Log to confirm the form is loaded
-    console.log("Form loaded");
+  var t = window.TrelloPowerUp.iframe();
 
-    // Trello Power-Up initialization
-    var t = window.TrelloPowerUp.iframe();
+  document.getElementById('save-button').addEventListener('click', function() {
+    var questions = document.getElementById('questions').value;
+    var answers = document.getElementById('answers').value;
 
-    // Log to confirm Trello iframe is initialized
-    console.log("Trello iframe initialized");
-
-    // Add save button event listener
-    document.getElementById('save-button').addEventListener('click', function() {
-      var answer = document.getElementById('question-1').value;
-      console.log("Saving data:", answer); // Debug log
-
-      t.set('card', 'shared', 'formData', { question1: answer }).then(function() {
-        console.log("Data saved"); // Debug log
-        t.closePopup();
-      }).catch(function(err) {
-        console.error("Error saving data:", err); // Error log
-      });
+    // Save data to the card's shared scope
+    t.set('card', 'shared', {
+      questions_answers: {
+        questions: questions,
+        answers: answers
+      }
+    }).then(function(){
+      t.closePopup(); // Close the popup after saving
     });
-
-    // Render existing data
-    t.render(function() {
-      console.log("Rendering form data"); // Debug log
-
-      t.get('card', 'shared', 'formData').then(function(data) {
-        if (data && data.question1) {
-          document.getElementById('question-1').value = data.question1;
-          console.log("Loaded saved data:", data.question1); // Debug log
-        }
-      }).catch(function(err) {
-        console.error("Error loading data:", err); // Error log
-      });
-    });
+  });
   </script>
 </body>
 </html>
