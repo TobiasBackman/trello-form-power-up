@@ -4,10 +4,10 @@ function onCreateQuestion(t) {
     title: 'Add Custom Question',
     items: [
       {
-        text: 'Enter Question Label',
+        text: 'Label the Question',
         callback: function (t) {
           return t.popup({
-            title: 'Enter Question Label',
+            title: 'Label the Question',
             url: 'data:text/html,' + encodeURIComponent(`
               <html>
               <body>
