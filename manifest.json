@@ -6,6 +6,9 @@
   },
   "author": "Mappi Softwares",
   "capabilities": {
+    "card-badges": [],
+    "board-buttons": [],
+    "card-detail-badges": [],
     "card-buttons": [
       {
         "text": "Add Question",
