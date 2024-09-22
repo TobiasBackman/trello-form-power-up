@@ -2,7 +2,7 @@
   "name": "Trello Form Power-Up",
   "details": "A form Power-Up",
   "icon": {
-    "url": "https://raw.githubusercontent.com/TobiasBackman/trello-form-power-up/refs/heads/master/icon.png"
+    "url": "https://github.com/TobiasBackman/trello-form-power-up/blob/master/icon.png?raw=true"
   },
   "author": "Mappi Softwares",
   "capabilities": {
@@ -15,7 +15,7 @@
     "card-back-section": {
       "title": "Custom Questions",
       "icon": {
-        "url": "./icon.png"
+          "url": "https://github.com/TobiasBackman/trello-form-power-up/blob/master/icon.png?raw=true"
       },
       "content": {
         "type": "iframe",
