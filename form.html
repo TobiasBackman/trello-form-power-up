@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Form</title>
+  <style>
+    body { font-family: Arial, sans-serif; }
+    .form-container { padding: 10px; }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h3>Custom Form</h3>
+    <label for="question-1">Question 1:</label>
+    <input type="text" id="question-1">
+    <button id="save-button">Save</button>
+  </div>
+
+  <script src="https://p.trellocdn.com/power-up.min.js"></script>
+  <script>
+    var t = window.TrelloPowerUp.iframe();
+    document.getElementById('save-button').addEventListener('click', function() {
+      var answer = document.getElementById('question-1').value;
+      t.set('card', 'shared', 'formData', { question1: answer }).then(function() {
+        t.closePopup();
+      });
+    });
+  </script>
+</body>
+</html>
