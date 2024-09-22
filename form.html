@@ -19,48 +19,39 @@
 
   <script src="https://p.trellocdn.com/power-up.min.js"></script>
   <script>
+    // Log to confirm the form is loaded
+    console.log("Form loaded");
+
+    // Trello Power-Up initialization
     var t = window.TrelloPowerUp.iframe();
 
-    // Initialize the Power-Up and inject into Trello
-    window.TrelloPowerUp.initialize({
-      'card-buttons': function(t, options) {
-        return [{
-          text: 'Add Form',
-          callback: function(t) {
-            return t.popup({
-              title: 'Custom Form',
-              url: 'https://tobiasbackman.github.io/trello-form-power-up/form.html', // Ensure this matches your GitHub Pages URL
-              height: 300
-            });
-          }
-        }];
-      },
-      'card-back-section': function(t, options) {
-        return {
-          title: 'Custom Form',
-          content: {
-            type: 'iframe',
-            url: t.signUrl('https://tobiasbackman.github.io/trello-form-power-up/form.html'), // Ensure this matches your GitHub Pages URL
-            height: 250
-          }
-        };
-      }
-    });
+    // Log to confirm Trello iframe is initialized
+    console.log("Trello iframe initialized");
 
-    // Form saving logic
+    // Add save button event listener
     document.getElementById('save-button').addEventListener('click', function() {
       var answer = document.getElementById('question-1').value;
+      console.log("Saving data:", answer); // Debug log
+
       t.set('card', 'shared', 'formData', { question1: answer }).then(function() {
+        console.log("Data saved"); // Debug log
         t.closePopup();
+      }).catch(function(err) {
+        console.error("Error saving data:", err); // Error log
       });
     });
 
-    // Load previously saved form data, if available
+    // Render existing data
     t.render(function() {
+      console.log("Rendering form data"); // Debug log
+
       t.get('card', 'shared', 'formData').then(function(data) {
         if (data && data.question1) {
           document.getElementById('question-1').value = data.question1;
+          console.log("Loaded saved data:", data.question1); // Debug log
         }
+      }).catch(function(err) {
+        console.error("Error loading data:", err); // Error log
       });
     });
   </script>
