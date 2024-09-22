@@ -1,47 +1,48 @@
-// Function to open the popup for adding a question
+// Open a popup for adding a custom question
 function onCreateQuestion(t) {
   return t.popup({
     title: 'Add Custom Question',
     items: [
       {
         text: 'Enter Question Label',
-        callback: function(t) {
+        callback: function (t) {
           return t.popup({
             title: 'Enter Question Label',
             url: 'data:text/html,' + encodeURIComponent(`
               <html>
-                <body>
-                  <input type="text" id="questionLabel" placeholder="Enter your question label">
-                  <button id="submitLabel">Submit</button>
-                  <script>
-                    document.getElementById('submitLabel').addEventListener('click', function() {
-                      var label = document.getElementById('questionLabel').value;
-                      window.TrelloPowerUp.iframe().set('card', 'shared', 'questionLabel', label).then(function() {
-                        window.TrelloPowerUp.iframe().closePopup();
-                      });
+              <body>
+                <input type="text" id="questionLabel" placeholder="Enter your question label" />
+                <button id="submitLabel">Submit</button>
+                <script>
+                  document.getElementById('submitLabel').addEventListener('click', function() {
+                    var label = document.getElementById('questionLabel').value;
+                    window.TrelloPowerUp.iframe().set('card', 'shared', 'questionLabel', label).then(function() {
+                      window.TrelloPowerUp.iframe().closePopup();
                     });
-                  </script>
-                </body>
-              </html>`),
+                  });
+                </script>
+              </body>
+              </html>
+            `),
             height: 150
           });
         }
       },
       {
         text: 'Choose Question Type',
-        callback: function(t) {
+        callback: function (t) {
           return t.popup({
             title: 'Choose Question Type',
             items: [
               {
                 text: 'Text',
-                callback: function(t) {
+                callback: function (t) {
                   return t.set('card', 'shared', 'questionType', 'text').then(() => t.closePopup());
                 }
               },
               {
                 text: 'Number',
-                callback: function(t) {
+                callback: function (t) {
                   return t.set('card', 'shared', 'questionType', 'number').then(() => t.closePopup());
                 }
               }
