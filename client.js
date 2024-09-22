@@ -81,12 +81,20 @@ function addQuestion() {
     <option value="dropdown">Dropdown</option>
   `;
 
+  const visibilitySelect = document.createElement('select');
+  visibilitySelect.innerHTML = `
+    <option value="always">Always Visible</option>
+    <option value="optional">Optional (Manually Added)</option>
+    <option value="list">Add when card is moved to a specific list</option>
+  `;
+
   questionDiv.appendChild(labelInput);
   questionDiv.appendChild(typeSelect);
+  questionDiv.appendChild(visibilitySelect);
   questionsContainer.appendChild(questionDiv);
 }
 
-// Function to save the new form
+// Function to save the new form with visibility rules
 function saveForm() {
   const formTitle = document.getElementById('form-title').textContent;
   const questions = document.querySelectorAll('.question-item');
@@ -98,7 +106,8 @@ function saveForm() {
   questions.forEach((questionDiv) => {
     const label = questionDiv.querySelector('input').value;
     const type = questionDiv.querySelector('select').value;
-    form.questions.push({ label, type });
+    const visibility = questionDiv.querySelectorAll('select')[1].value;
+    form.questions.push({ label, type, visibility });
   });
 
   TrelloPowerUp.iframe().set('card', 'shared', 'form', form).then(() => {
@@ -127,3 +136,15 @@ function renderQuestions(questions) {
     questionsContainer.appendChild(questionDiv);
   });
 }
+
+// List-based visibility logic
+TrelloPowerUp.iframe().get('card', 'shared', 'form').then(function(form) {
+  t.get('card', 'shared', 'list').then(function(cardList) {
+    form.questions.forEach(function(question) {
+      if (question.visibility === 'list' && cardList.name === 'Specific List Name') {
+        // Add question to the form if it should be triggered by list
+        renderQuestions([question]);
+      }
+    });
+  });
+});
