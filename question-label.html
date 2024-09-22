@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Enter Question Label</title>
+</head>
+<body>
+  <input type="text" id="questionLabel" placeholder="Enter your question label">
+  <button id="submitLabel">Submit</button>
+
+  <script>
+    const t = TrelloPowerUp.iframe();
+    document.getElementById('submitLabel').addEventListener('click', function() {
+      const label = document.getElementById('questionLabel').value;
+      t.set('card', 'shared', 'questionLabel', label).then(function() {
+        t.popup({
+          title: 'Choose Question Type',
+          url: './choose-question-type.html',
+          height: 150
+        });
+      });
+    });
+  </script>
+</body>
+</html>

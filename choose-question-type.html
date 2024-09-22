@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Choose Question Type</title>
+</head>
+<body>
+  <button id="textType">Text</button>
+  <button id="numberType">Number</button>
+
+  <script>
+    const t = TrelloPowerUp.iframe();
+    document.getElementById('textType').addEventListener('click', function() {
+      t.set('card', 'shared', 'questionType', 'text').then(function() {
+        t.closePopup();
+      });
+    });
+
+    document.getElementById('numberType').addEventListener('click', function() {
+      t.set('card', 'shared', 'questionType', 'number').then(function() {
+        t.closePopup();
+      });
+    });
+  </script>
+</body>
+</html>

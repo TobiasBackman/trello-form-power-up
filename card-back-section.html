@@ -7,19 +7,19 @@
   <div id="questions-container">Loading...</div>
 
   <script>
-    // Get the questions stored on the Trello card
-    window.TrelloPowerUp.iframe().get('card', 'shared', 'questions').then(function(questions) {
-      const container = document.getElementById('questions-container');
-      container.innerHTML = ''; // Clear loading text
-      if (questions && questions.length > 0) {
-        questions.forEach(function(q) {
-          const questionDiv = document.createElement('div');
-          questionDiv.innerHTML = '<label>' + q.label + '</label><input type="' + q.type + '">';
-          container.appendChild(questionDiv);
-        });
-      } else {
-        container.innerHTML = 'No custom questions available.';
-      }
+    const t = TrelloPowerUp.iframe();
+    t.get('card', 'shared', 'questionLabel').then(function(label) {
+      t.get('card', 'shared', 'questionType').then(function(type) {
+        if (label && type) {
+          document.getElementById('questions-container').innerHTML = `
+            <div class="question-item">
+              <label>${label}</label>
+              <input type="${type}">
+            </div>`;
+        } else {
+          document.getElementById('questions-container').innerHTML = 'No questions available.';
+        }
+      });
     });
   </script>
 </body>
