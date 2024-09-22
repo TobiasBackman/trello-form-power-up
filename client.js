@@ -35,13 +35,13 @@ function onCreateQuestion(t) {
             items: [
               {
                 text: 'Text',
-                callback: function() {
+                callback: function(t) {
                   return t.set('card', 'shared', 'questionType', 'text').then(() => t.closePopup());
                 }
               },
               {
                 text: 'Number',
-                callback: function() {
+                callback: function(t) {
                   return t.set('card', 'shared', 'questionType', 'number').then(() => t.closePopup());
                 }
               }
@@ -53,7 +53,7 @@ function onCreateQuestion(t) {
   });
 }
 
-// Initialize the Trello Power-Up
+// Initialize Trello Power-Up
 TrelloPowerUp.initialize({
   'card-buttons': function(t) {
     return [
@@ -68,9 +68,9 @@ TrelloPowerUp.initialize({
   }
 });
 
-// Render questions on the card back section
+// Show questions on the card back section
 function onShowQuestionsOnCard(t) {
-  return t.get('card', 'shared', 'questions').then(function(questions) {
+  return t.get('card', 'shared', 'questions').then(function (questions) {
     if (questions && questions.length > 0) {
       const questionHtml = questions.map((q) => {
         return `<div class="question-item">
@@ -99,7 +99,7 @@ function onShowQuestionsOnCard(t) {
   });
 }
 
-// Save a new question to the card
+// Save new question to the card
 function saveQuestion(t, question) {
   return t.get('card', 'shared', 'questions').then((questions) => {
     questions = questions || [];

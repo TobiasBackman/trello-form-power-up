@@ -14,7 +14,14 @@
     ],
     "card-back-section": {
       "title": "Custom Questions",
-      "callback": "onShowQuestionsOnCard"
+      "icon": {
+        "url": "./icon.ico"
+      },
+      "content": {
+        "type": "iframe",
+        "url": "./card-back-section.html",
+        "height": 300
+      }
     }
   },
   "iframe": {

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Custom Questions</title>
+</head>
+<body>
+  <div id="questions-container">Loading...</div>
+
+  <script>
+    // Get the questions stored on the Trello card
+    window.TrelloPowerUp.iframe().get('card', 'shared', 'questions').then(function(questions) {
+      const container = document.getElementById('questions-container');
+      container.innerHTML = ''; // Clear loading text
+      if (questions && questions.length > 0) {
+        questions.forEach(function(q) {
+          const questionDiv = document.createElement('div');
+          questionDiv.innerHTML = '<label>' + q.label + '</label><input type="' + q.type + '">';
+          container.appendChild(questionDiv);
+        });
+      } else {
+        container.innerHTML = 'No custom questions available.';
+      }
+    });
+  </script>
+</body>
+</html>
