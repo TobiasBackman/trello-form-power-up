@@ -1,5 +1,5 @@
 {
-  "name": "Custom Form Power-Up",
+  "name": "Trello Form Power Up",
   "capabilities": [
     "card-buttons",
     "card-back-section"

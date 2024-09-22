@@ -20,10 +20,49 @@
   <script src="https://p.trellocdn.com/power-up.min.js"></script>
   <script>
     var t = window.TrelloPowerUp.iframe();
+
+    // Initialize the Power-Up and inject into Trello
+    window.TrelloPowerUp.initialize({
+      'card-buttons': function(t, options) {
+        return [{
+          icon: 'https://raw.githubusercontent.com/TobiasBackman/trello-form-power-up/main/icon.png', // Replace with your icon URL
+          text: 'Add Form',
+          callback: function(t) {
+            return t.popup({
+              title: 'Custom Form',
+              url: 'https://tobiasbackman.github.io/trello-form-power-up/form.html', // Ensure this matches your GitHub Pages URL
+              height: 300
+            });
+          }
+        }];
+      },
+      'card-back-section': function(t, options) {
+        return {
+          title: 'Custom Form',
+          icon: 'https://raw.githubusercontent.com/TobiasBackman/trello-form-power-up/main/icon.png', // Replace with your icon URL
+          content: {
+            type: 'iframe',
+            url: t.signUrl('https://tobiasbackman.github.io/trello-form-power-up/form.html'), // Ensure this matches your GitHub Pages URL
+            height: 250
+          }
+        };
+      }
+    });
+
+    // Form saving logic
     document.getElementById('save-button').addEventListener('click', function() {
       var answer = document.getElementById('question-1').value;
       t.set('card', 'shared', 'formData', { question1: answer }).then(function() {
         t.closePopup();
+      });
+    });
+
+    // Load previously saved form data, if available
+    t.render(function() {
+      t.get('card', 'shared', 'formData').then(function(data) {
+        if (data && data.question1) {
+          document.getElementById('question-1').value = data.question1;
+        }
       });
     });
   </script>
