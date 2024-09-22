@@ -1,53 +1,29 @@
-// Open a popup for adding a custom question
+// Function to open a popup for adding a custom question
 function onCreateQuestion(t) {
+  return t.prompt('Enter Question Label', 'e.g., What is your favorite color?')
+    .then(function(label) {
+      // Store the label and then ask for the type
+      return t.set('card', 'shared', 'questionLabel', label).then(function() {
+        return onChooseQuestionType(t);
+      });
+    });
+}
+
+// Function to choose the question type (Text, Number, etc.)
+function onChooseQuestionType(t) {
   return t.popup({
-    title: 'Add Custom Question',
+    title: 'Choose Question Type',
     items: [
       {
-        text: 'Label the Question',
-        callback: function (t) {
-          return t.popup({
-            title: 'Label the Question',
-            url: 'data:text/html,' + encodeURIComponent(`
-              <html>
-              <body>
-                <input type="text" id="questionLabel" placeholder="Enter your question label" />
-                <button id="submitLabel">Submit</button>
-                <script>
-                  document.getElementById('submitLabel').addEventListener('click', function() {
-                    var label = document.getElementById('questionLabel').value;
-                    window.TrelloPowerUp.iframe().set('card', 'shared', 'questionLabel', label).then(function() {
-                      window.TrelloPowerUp.iframe().closePopup();
-                    });
-                  });
-                </script>
-              </body>
-              </html>
-            `),
-            height: 150
-          });
+        text: 'Text',
+        callback: function(t) {
+          return t.set('card', 'shared', 'questionType', 'text').then(() => t.closePopup());
         }
       },
       {
-        text: 'Choose Question Type',
-        callback: function (t) {
-          return t.popup({
-            title: 'Choose Question Type',
-            items: [
-              {
-                text: 'Text',
-                callback: function (t) {
-                  return t.set('card', 'shared', 'questionType', 'text').then(() => t.closePopup());
-                }
-              },
-              {
-                text: 'Number',
-                callback: function (t) {
-                  return t.set('card', 'shared', 'questionType', 'number').then(() => t.closePopup());
-                }
-              }
-            ]
-          });
+        text: 'Number',
+        callback: function(t) {
+          return t.set('card', 'shared', 'questionType', 'number').then(() => t.closePopup());
         }
       }
     ]
@@ -69,42 +45,34 @@ TrelloPowerUp.initialize({
   }
 });
 
-// Show questions on the card back section
+// Function to show questions on the card back section
 function onShowQuestionsOnCard(t) {
-  return t.get('card', 'shared', 'questions').then(function (questions) {
-    if (questions && questions.length > 0) {
-      const questionHtml = questions.map((q) => {
-        return `<div class="question-item">
-                  <label>${q.label}</label>
-                  <input type="${q.type}" />
-                </div>`;
-      }).join('');
-      return {
-        title: 'Custom Questions',
-        content: {
-          type: 'iframe',
-          url: 'data:text/html,' + encodeURIComponent(`
-            <html>
-              <body>${questionHtml}</body>
-            </html>
-          `),
-          height: 300
-        }
-      };
-    } else {
-      return {
-        title: 'Custom Questions',
-        content: 'No questions added yet.'
-      };
-    }
-  });
-}
-
-// Save new question to the card
-function saveQuestion(t, question) {
-  return t.get('card', 'shared', 'questions').then((questions) => {
-    questions = questions || [];
-    questions.push(question);
-    return t.set('card', 'shared', 'questions', questions).then(() => t.closePopup());
+  return t.get('card', 'shared', 'questionLabel').then(function(label) {
+    return t.get('card', 'shared', 'questionType').then(function(type) {
+      if (label && type) {
+        const questionHtml = `<div class="question-item">
+                                <label>${label}</label>
+                                <input type="${type}" />
+                              </div>`;
+        return {
+          title: 'Custom Questions',
+          content: {
+            type: 'iframe',
+            url: 'data:text/html,' + encodeURIComponent(`
+              <html>
+              <body>
+                ${questionHtml}
+              </body>
+              </html>`),
+            height: 300
+          }
+        };
+      } else {
+        return {
+          title: 'Custom Questions',
+          content: 'No questions added yet.'
+        };
+      }
+    });
   });
 }
