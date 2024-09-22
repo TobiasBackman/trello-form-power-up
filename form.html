@@ -1,40 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <title>Form</title>
-  <style>
-    body { font-family: Arial, sans-serif; }
-    .form-container { padding: 10px; }
-  </style>
+  <title>Form Builder / Viewer</title>
+  <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
-  <div class="form-container">
-    <h3>Custom Form</h3>
-    <label for="question-1">Question 1:</label>
-    <input type="text" id="question-1">
-    <button id="save-button">Save</button>
+  <div id="form-container">
+    <h3 id="form-title"></h3>
+
+    <div id="questions-container">
+      <!-- Questions for form creation or viewing will be dynamically added here -->
+    </div>
+
+    <button id="add-question-btn" style="display:none;">Add Question</button>
+    <button id="save-form-btn" style="display:none;">Save Form</button>
+    <button id="submit-form-btn" style="display:none;">Submit Form</button>
   </div>
 
-  <script src="https://p.trellocdn.com/power-up.min.js"></script>
-  <script>
-  var t = window.TrelloPowerUp.iframe();
-
-  document.getElementById('save-button').addEventListener('click', function() {
-    var questions = document.getElementById('questions').value;
-    var answers = document.getElementById('answers').value;
-
-    // Save data to the card's shared scope
-    t.set('card', 'shared', {
-      questions_answers: {
-        questions: questions,
-        answers: answers
-      }
-    }).then(function(){
-      t.closePopup(); // Close the popup after saving
-    });
-  });
-  </script>
+  <script src="./client.js"></script>
 </body>
 </html>
