@@ -2,76 +2,60 @@
 function onCreateQuestion(t) {
   return t.popup({
     title: 'Add Custom Question',
-    items: function () {
-      return [
-        {
-          text: 'Enter question label',
-          callback: function (t) {
-            return t.text('Enter Question Label').then((label) => {
-              return t.set('card', 'shared', 'questionLabel', label);
-            });
-          }
-        },
-        {
-          text: 'Choose question type',
-          callback: function (t) {
-            return t.popup({
-              title: 'Question Type',
-              items: function () {
-                return [
-                  { text: 'Text', callback: () => t.set('card', 'shared', 'questionType', 'text') },
-                  { text: 'Number', callback: () => t.set('card', 'shared', 'questionType', 'number') }
-                ];
-              }
-            });
-          }
+    items: [
+      {
+        text: 'Enter Question Label',
+        callback: function(t) {
+          return t.popup({
+            title: 'Enter Question Label',
+            url: 'data:text/html,' + encodeURIComponent(`
+              <html>
+                <body>
+                  <input type="text" id="questionLabel" placeholder="Enter your question label">
+                  <button id="submitLabel">Submit</button>
+                  <script>
+                    document.getElementById('submitLabel').addEventListener('click', function() {
+                      var label = document.getElementById('questionLabel').value;
+                      window.TrelloPowerUp.iframe().set('card', 'shared', 'questionLabel', label).then(function() {
+                        window.TrelloPowerUp.iframe().closePopup();
+                      });
+                    });
+                  </script>
+                </body>
+              </html>`),
+            height: 150
+          });
         }
-      ];
-    }
+      },
+      {
+        text: 'Choose Question Type',
+        callback: function(t) {
+          return t.popup({
+            title: 'Choose Question Type',
+            items: [
+              {
+                text: 'Text',
+                callback: function() {
+                  return t.set('card', 'shared', 'questionType', 'text').then(() => t.closePopup());
+                }
+              },
+              {
+                text: 'Number',
+                callback: function() {
+                  return t.set('card', 'shared', 'questionType', 'number').then(() => t.closePopup());
+                }
+              }
+            ]
+          });
+        }
+      }
+    ]
   });
 }
 
-
-// Popup content for adding a new question, defined inline
-function addQuestionPopup(t) {
-  return t.popup({
-    title: 'Add Custom Question',
-    items: function (t, options) {
-      return [
-        {
-          text: 'Question Label:',
-          callback: function (t) {
-            return t.text({
-              defaultValue: '',
-              title: 'Enter Question Label',
-              hint: 'e.g., What is your name?'
-            }).then((label) => {
-              return t.set('card', 'shared', 'questionLabel', label).then(() => t.closePopup());
-            });
-          }
-        },
-        {
-          text: 'Question Type:',
-          callback: function (t) {
-            return t.popup({
-              items: function () {
-                return [
-                  { text: 'Text', callback: () => t.set('card', 'shared', 'questionType', 'text') },
-                  { text: 'Number', callback: () => t.set('card', 'shared', 'questionType', 'number') },
-                  { text: 'Dropdown', callback: () => t.set('card', 'shared', 'questionType', 'dropdown') }
-                ];
-              }
-            });
-          }
-        }
-      ];
-    }
-  });
-}
-
-// Initialize Trello Power-Up
+// Initialize the Trello Power-Up
 TrelloPowerUp.initialize({
-  'card-buttons': function (t) {
+  'card-buttons': function(t) {
     return [
       {
         text: 'Add Question',
@@ -79,14 +63,14 @@ TrelloPowerUp.initialize({
       }
     ];
   },
-  'card-back-section': function (t) {
+  'card-back-section': function(t) {
     return onShowQuestionsOnCard(t);
   }
 });
 
-// Show questions on the card back section
+// Render questions on the card back section
 function onShowQuestionsOnCard(t) {
-  return t.get('card', 'shared', 'questions').then(function (questions) {
+  return t.get('card', 'shared', 'questions').then(function(questions) {
     if (questions && questions.length > 0) {
       const questionHtml = questions.map((q) => {
         return `<div class="question-item">
@@ -115,7 +99,7 @@ function onShowQuestionsOnCard(t) {
   });
 }
 
-// Save new question to the card
+// Save a new question to the card
 function saveQuestion(t, question) {
   return t.get('card', 'shared', 'questions').then((questions) => {
     questions = questions || [];
