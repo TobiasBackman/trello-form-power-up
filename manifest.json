@@ -6,22 +6,16 @@
   },
   "author": "Mappi Softwares",
   "capabilities": {
-    "board-buttons": [],
     "card-buttons": [
       {
-        "text": "Create Form",
-        "callback": "onCreateForm"
-      },
-      {
-        "text": "View Form",
-        "callback": "onViewForm"
+        "text": "Add Question",
+        "callback": "onCreateQuestion"
       }
     ],
     "card-back-section": {
-      "title": "Custom Forms",
-      "callback": "onShowCardBack"
-    },
-    "card-detail-badges": []
+      "title": "Custom Questions",
+      "callback": "onShowQuestionsOnCard"
+    }
   },
   "iframe": {
     "url": "./index.html"
