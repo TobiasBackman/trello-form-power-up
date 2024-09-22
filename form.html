@@ -25,7 +25,6 @@
     window.TrelloPowerUp.initialize({
       'card-buttons': function(t, options) {
         return [{
-          icon: 'https://raw.githubusercontent.com/TobiasBackman/trello-form-power-up/main/icon.png', // Replace with your icon URL
           text: 'Add Form',
           callback: function(t) {
             return t.popup({
@@ -39,7 +38,6 @@
       'card-back-section': function(t, options) {
         return {
           title: 'Custom Form',
-          icon: 'https://raw.githubusercontent.com/TobiasBackman/trello-form-power-up/main/icon.png', // Replace with your icon URL
           content: {
             type: 'iframe',
             url: t.signUrl('https://tobiasbackman.github.io/trello-form-power-up/form.html'), // Ensure this matches your GitHub Pages URL
