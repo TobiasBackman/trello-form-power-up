@@ -1,27 +1,14 @@
-// client.js
-
-// Load Trello's Power-Up framework
-var t = window.TrelloPowerUp.iframe();
-
-// Trello Power-Up Initialization
 window.TrelloPowerUp.initialize({
-  // Define the card button capability
   'card-buttons': function (t, opts) {
     return [{
-      // Button text displayed on the card
-      text: 'Open Form',
-
-      // Function to handle the button click
+      text: 'Submit Form', // Your button text
       callback: function (t) {
-        // Open a popup to display a form or message
         return t.popup({
-          title: 'Fill the form',
-          url: './form.html',  // Reference to your form HTML file
-          height: 250  // Define the height of the popup
+          title: 'Custom Form',
+          url: 'https://tobiasbackman.github.io/trello-form-power-up/form.html', // Use your hosted URL
+          height: 250
         });
       }
     }];
-  },
-
-  // You can add more capabilities here, such as board buttons, card badges, etc.
+  }
 });

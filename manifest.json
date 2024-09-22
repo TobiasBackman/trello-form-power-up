@@ -1,6 +1,10 @@
 {
-  "name": "Custom Form Power-Up",
+  "name": "Trello Form Power-Up",
   "capabilities": ["card-buttons"],
-  "start_url": "https://tobiasbackman.github.io/trello-form-power-up/form.html",
-  "description": "Simple form power-up."
+  "connectors": {
+    "card-buttons": "https://tobiasbackman.github.io/trello-form-power-up/client.js"
+  },
+  "icon": {
+    "url": "https://tobiasbackman.github.io/trello-form-power-up/icon.ico"
+  }
 }
